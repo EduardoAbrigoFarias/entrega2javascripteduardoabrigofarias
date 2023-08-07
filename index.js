@@ -383,7 +383,8 @@ console.log("Muestro arreglo Final");
 console.log(dataVenta);
 
 textoVenta = "Bienvenidos a la Tienda de REMATE de Zapatillas \n"+
-"Estos son los productos que tenemos en Stock: \n "+textoVenta;
+"Estos son los productos que tenemos en Stock \n"+
+"Usted debe comprar ingresando el ID del producto. \n \n"+textoVenta;
 console.log(textoVenta);
 
 // Mensaje alert para que usuario vea los productos de la tienda
@@ -447,6 +448,7 @@ console.log("Id ingresado por el usuario: " + idProducto);
             //if (! cantidadCorrecta) { alert("Error, Cantidad de pruductod Incorrecta. Compra abortada"); }
             return cantidadCorrecta;
         }
+        // Invoco a Funcion que valida la Cantidad ingresada por el usuario
         cantidadBoolean = validaCantidad(cantidadUsuario); 
 
         // Si no es correcto el primer ingreso de cantidad
@@ -465,11 +467,18 @@ console.log("Id ingresado por el usuario: " + idProducto);
         // Si cantidad es correcta ejecuto FILTER sobre el ARRAY para
         // rescatar los datos del producto en 
         if (cantidadBoolean) {  
+            let existeID = true;
             const dataEncontrado = dataVenta.filter( data => data.id == idProducto)
             console.log("Registro encontrado");
             console.log(dataEncontrado);
+            if (dataEncontrado.length == 0) {
+                existeID = false;
+                alert(`ERROR ID de producto ingresado ${idProducto} No existe en stock. Compra abortada`);
+            }
 
             // Valido si hay Stock Suficiente del producto
+            // solo si el si el producto con su ID existe
+            if (existeID) {
             if (Number(cantidadUsuario) > Number(dataEncontrado[0].stock)) {
                 alert(`ERROR lo sentimos cantidad solicitada  ${cantidadUsuario} es mayor a nuestro actual stock ${dataEncontrado[0].stock}. Compra abortada`);
             } else {
@@ -533,9 +542,10 @@ console.log("Id ingresado por el usuario: " + idProducto);
                 // Muestro con un ALERT el resumen de la venta
                 // mostrando datos del producto si tiene descuento
                 // se aplica al total        
-                alert("Resumen de la venta \n" + resumenVenta);                             
+                alert("Resumen de la Venta \n" + resumenVenta);                             
                 console.log("Resumen de la venta \n" + resumenVenta);  
             }
+           }// si producto existe
         }
 }   
 
